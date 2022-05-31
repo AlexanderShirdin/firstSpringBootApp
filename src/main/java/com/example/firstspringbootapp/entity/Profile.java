@@ -1,6 +1,7 @@
 package com.example.firstspringbootapp.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,20 +9,17 @@ import java.util.List;
 @Entity
 @Table(name = "Profiles")
 @Data
+@Accessors(chain = true)
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @ManyToMany(cascade = {
+    @OneToMany(mappedBy = "profile", cascade = {
             CascadeType.DETACH,
             CascadeType.PERSIST,
             CascadeType.MERGE,
             CascadeType.REFRESH
     })
-    @JoinTable(name = "questions",
-            joinColumns = @JoinColumn(name = "profile_id"),
-            inverseJoinColumns = @JoinColumn(name = "level_id")
-    )
-    private List<Level> levels;
+    private List<Question> questions;
 }
