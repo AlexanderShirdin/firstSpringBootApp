@@ -11,3 +11,7 @@ spring:
     properties:
       dialect: org.hibernate.dialect.PostgreSQL94Dialect
       format_sql: true
+server:
+  port: 9595
+  servlet:
+    context-path: /api

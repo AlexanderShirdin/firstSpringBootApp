@@ -36,19 +36,16 @@ public class AnswerServiceImp implements AnswerService {
     }
 
     @Override
-    public void update(Answer answer, Integer id) {
-        Answer answerById = findById(id);
-        if (answerById == null) throw new AnswerNotFoundException("Answer with id" + id + "not found in database");
-        answer.setName(answer.getName())
-                .setCorrect(answer.getCorrect())
-                .setQuestion(answer.getQuestion());
-        answerRepository.save(answerById);
+    public void update(Answer newAnswer, Integer id) {
+        Answer oldAnswer = findById(id);
+        oldAnswer.setName(newAnswer.getName())
+                .setCorrect(newAnswer.getCorrect());
+        answerRepository.save(oldAnswer);
     }
 
     @Override
     public void delete(Integer id) {
         Answer answerById = findById(id);
-        if (answerById == null) throw new AnswerNotFoundException("Answer with id" + id + "not found in database");
         answerRepository.delete(answerById);
     }
 }

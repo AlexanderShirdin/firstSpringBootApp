@@ -37,17 +37,16 @@ public class ProfileServiceImp implements ProfileService {
     }
 
     @Override
-    public void update(Profile profile, Integer id) {
-        Profile profileById = findById(id);
-        if (profileById == null) throw new ProfileNotFoundException("Profile with id" + id + "not found in database");
-        profile.setName(profile.getName());
-        profileRepository.save(profileById);
+    public void update(Profile newProfile, Integer id) {
+        Profile oldProfile = findById(id);
+        oldProfile.setName(newProfile.getName())
+                .setQuestions(newProfile.getQuestions());
+        profileRepository.save(oldProfile);
     }
 
     @Override
     public void delete(Integer id) {
         Profile profileById = findById(id);
-        if (profileById == null) throw new ProfileNotFoundException("Profile with id" + id + "not found in database");
         profileRepository.delete(profileById);
     }
 }

@@ -36,17 +36,15 @@ public class LevelServiceImp implements LevelService {
     }
 
     @Override
-    public void update(Level level, Integer id) {
-        Level levelById = findById(id);
-        if (levelById == null) throw new LevelNotFoundException("Level with id" + id + "not found in database");
-        level.setName(level.getName());
-        levelRepository.save(levelById);
+    public void update(Level newLevel, Integer id) {
+        Level oldLevel = findById(id);
+        oldLevel.setName(newLevel.getName());
+        levelRepository.save(oldLevel);
     }
 
     @Override
     public void delete(Integer id) {
         Level levelById = findById(id);
-        if (levelById == null) throw new LevelNotFoundException("Level with id" + id + "not found in database");
         levelRepository.delete(levelById);
     }
 }
