@@ -1,6 +1,8 @@
 package com.example.firstspringbootapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -22,5 +24,6 @@ public class Profile {
             CascadeType.MERGE,
             CascadeType.REFRESH
     })
+    @JsonManagedReference(value = "question-profile")
     private List<Question> questions;
 }

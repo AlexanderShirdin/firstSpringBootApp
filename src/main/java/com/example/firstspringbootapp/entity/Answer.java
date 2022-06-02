@@ -1,6 +1,8 @@
 package com.example.firstspringbootapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -23,5 +25,6 @@ public class Answer {
             CascadeType.REFRESH
     })
     @JoinColumn(name = "question_id")
+    @JsonBackReference(value = "question-answer")
     private Question question;
 }

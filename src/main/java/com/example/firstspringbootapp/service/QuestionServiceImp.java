@@ -3,6 +3,7 @@ package com.example.firstspringbootapp.service;
 import com.example.firstspringbootapp.entity.Answer;
 import com.example.firstspringbootapp.entity.Question;
 import com.example.firstspringbootapp.exception.AnswerQuantityMismatchException;
+import com.example.firstspringbootapp.exception.QuestionExistException;
 import com.example.firstspringbootapp.exception.QuestionNotFoundException;
 import com.example.firstspringbootapp.repository.QuestionRepository;
 import org.springframework.beans.TypeMismatchException;
@@ -37,35 +38,23 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     public void save(Question question) {
-
-        long countAnswerCorrect = question.getAnswers()
-                .stream()
-                .filter(Answer::getCorrect)
-                .count();
-
-        if (question.getNumOfCorrect() != countAnswerCorrect) {
-            throw new AnswerQuantityMismatchException("Quantity add true answers, is not correct");
-        }
-        boolean present = questionRepository.findQuestionByName(question.getName()).isPresent();
-        if(present) throw  new; QuestionExistException(Question with name question.getName())
-
-
+        checkCountCorrectAnswer(question);
+        checkQuestionExistByName(question.getName());
         List<Answer> answers = question.getAnswers();
-
         answers.forEach(a -> a.setQuestion(question));
         question.setAnswers(answers);
-//        question.getAnswers().forEach(question::addAnswerToQuestion);
         questionRepository.save(question);
     }
 
     @Override
     public void update(Question newQuestion, Integer id) {
+        checkCountCorrectAnswer(newQuestion);
+        checkQuestionExistByName(newQuestion.getName());
         Question oldQuestion = findById(id);
         oldQuestion.setName(newQuestion.getName())
                 .setNumOfCorrect(newQuestion.getNumOfCorrect())
                 .setProfile(newQuestion.getProfile())
                 .setLevel(newQuestion.getLevel());
-
         questionRepository.save(oldQuestion);
     }
 
@@ -73,5 +62,19 @@ public class QuestionServiceImp implements QuestionService {
     public void delete(Integer id) {
         Question questionById = findById(id);
         questionRepository.delete(questionById);
+    }
+
+    public void checkCountCorrectAnswer(Question question){
+        long countAnswerCorrect = question.getAnswers()
+                .stream()
+                .filter(Answer::getCorrect)
+                .count();
+        if (question.getNumOfCorrect() != countAnswerCorrect) {
+            throw new AnswerQuantityMismatchException("Quantity add true answers, is not correct");
+        }
+    }
+    public void checkQuestionExistByName(String questionName){
+        boolean isPresent = questionRepository.findQuestionByName(questionName).isPresent();
+        if (isPresent) throw new QuestionNotFoundException("Question with name " + questionName + " exist");
     }
 }

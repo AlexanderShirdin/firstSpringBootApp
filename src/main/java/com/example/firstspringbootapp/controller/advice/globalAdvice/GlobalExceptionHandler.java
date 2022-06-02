@@ -51,6 +51,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<MessageError> exceptionHandler(QuestionExistException exception) {
+        MessageError messageError = new MessageError();
+        messageError.setMessage(exception.getMessage());
+        return ResponseEntity.badRequest().body(messageError);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<MessageError> exceptionHandler(AnswerQuantityMismatchException exception) {
         MessageError messageError = new MessageError();
         messageError.setMessage(exception.getMessage());
