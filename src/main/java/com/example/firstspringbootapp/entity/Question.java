@@ -1,6 +1,5 @@
 package com.example.firstspringbootapp.entity;
 
-import com.example.firstspringbootapp.annotation.Unique;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,7 +15,6 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Unique
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)

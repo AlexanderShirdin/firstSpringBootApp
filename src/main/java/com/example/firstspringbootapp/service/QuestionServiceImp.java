@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,10 +37,20 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     public void save(Question question) {
-        List<Answer> answers = question.getAnswers();
 
-        if (question.getNumOfCorrect() != question.getAnswers().stream().filter(Answer::getCorrect).count())
+        long countAnswerCorrect = question.getAnswers()
+                .stream()
+                .filter(Answer::getCorrect)
+                .count();
+
+        if (question.getNumOfCorrect() != countAnswerCorrect) {
             throw new AnswerQuantityMismatchException("Quantity add true answers, is not correct");
+        }
+        boolean present = questionRepository.findQuestionByName(question.getName()).isPresent();
+        if(present) throw  new; QuestionExistException(Question with name question.getName())
+
+
+        List<Answer> answers = question.getAnswers();
 
         answers.forEach(a -> a.setQuestion(question));
         question.setAnswers(answers);
@@ -54,6 +65,7 @@ public class QuestionServiceImp implements QuestionService {
                 .setNumOfCorrect(newQuestion.getNumOfCorrect())
                 .setProfile(newQuestion.getProfile())
                 .setLevel(newQuestion.getLevel());
+
         questionRepository.save(oldQuestion);
     }
 
