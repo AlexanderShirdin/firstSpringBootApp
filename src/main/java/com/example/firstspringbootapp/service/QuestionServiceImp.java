@@ -26,7 +26,7 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     public Question findById(Integer id) {
-        return questionRepository.findById(id).orElseThrow(() -> new QuestionNotFoundException("Question with id" + id + "not found in database"));
+        return questionRepository.findById(id).orElseThrow(() -> new QuestionNotFoundException("Question with id " + id + " not found in database"));
     }
 
     @Override
@@ -60,8 +60,8 @@ public class QuestionServiceImp implements QuestionService {
 
     @Override
     public void delete(Integer id) {
-        Question questionById = findById(id);
-        questionRepository.delete(questionById);
+        Question delete = findById(id);
+        questionRepository.delete(delete);
     }
 
     public void checkCountCorrectAnswer(Question question){
@@ -75,6 +75,6 @@ public class QuestionServiceImp implements QuestionService {
     }
     public void checkQuestionExistByName(String questionName){
         boolean isPresent = questionRepository.findQuestionByName(questionName).isPresent();
-        if (isPresent) throw new QuestionNotFoundException("Question with name " + questionName + " exist");
+        if (isPresent) throw new QuestionExistException("Question with name " + questionName + " exist");
     }
 }

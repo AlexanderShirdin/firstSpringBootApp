@@ -11,7 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class QuestionRepresentationsModel implements RepresentationModelAssembler<Question, EntityModel<Question>> {
+public class QuestionRepresentationModel implements RepresentationModelAssembler<Question, EntityModel<Question>> {
 
     @Override
     public EntityModel<Question> toModel(Question entity) {

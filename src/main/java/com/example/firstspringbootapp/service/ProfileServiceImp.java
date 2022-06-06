@@ -46,7 +46,7 @@ public class ProfileServiceImp implements ProfileService {
 
     @Override
     public void delete(Integer id) {
-        Profile profileById = findById(id);
-        profileRepository.delete(profileById);
+        Profile delete = findById(id);
+        profileRepository.delete(delete);
     }
 }

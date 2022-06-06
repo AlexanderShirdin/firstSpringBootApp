@@ -44,7 +44,7 @@ public class LevelServiceImp implements LevelService {
 
     @Override
     public void delete(Integer id) {
-        Level levelById = findById(id);
-        levelRepository.delete(levelById);
+        Level delete = findById(id);
+        levelRepository.delete(delete);
     }
 }

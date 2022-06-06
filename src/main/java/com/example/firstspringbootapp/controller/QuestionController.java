@@ -1,6 +1,6 @@
 package com.example.firstspringbootapp.controller;
 
-import com.example.firstspringbootapp.controller.advice.globalAdvice.QuestionRepresentationsModel;
+import com.example.firstspringbootapp.controller.advice.globalAdvice.QuestionRepresentationModel;
 import com.example.firstspringbootapp.entity.Question;
 import com.example.firstspringbootapp.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionService questionService;
-    private  final QuestionRepresentationsModel model;
+    private final QuestionRepresentationModel model;
 
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<Question>>findById(@PathVariable Integer id) {
@@ -35,13 +35,13 @@ public class QuestionController {
         return ResponseEntity.ok("Question is created");
     }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(@RequestBody Question question, @PathVariable Integer id) {
         questionService.update(question, id);
         return ResponseEntity.ok("Question is updated");
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         questionService.delete(id);
         return ResponseEntity.ok("Question is deleted");
